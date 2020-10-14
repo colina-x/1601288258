@@ -1,9 +1,59 @@
 #include<stdio.h>
 
 char a[10000],stack[10000];
+int exam(char x[])
+{
+	int a = 0, mistake = 0, k = 0;
+	while (x[k] != '\0')
+	{
+		if (x[0] == '+' || x[0] == '-' || x[0] == '*' || x[0] == '/')
+		{
+			mistake = 1;
+			break;
+		}
+		if (x[k] == '(') a += 1;
+		if (x[k] == ')')
+		{
+			a -= 1;
+			if (x[k+1] != '+' && x[k+1] != '-' && x[k+1] != '*' && x[k+1] != '/' && x[k + 1] != ')')
+			{
+				mistake = 1;
+				break;
+			}
+		}
+		if (a < 0)
+		{
+			mistake = 1;
+			break;
+		}
+		if (x[k] == '+' || x[k] == '-' || x[k] == '*' || x[k] == '/' || x[k] == '(')
+		{
+			if (x[k + 1] == '+' || x[k + 1] == '-' || x[k + 1] == '*' || x[k + 1] == '/' || x[k+1] == ')')
+			{
+				mistake = 1;
+				break;
+			}
+		}
+		k += 1;
+	}
+	if (x[k-1] == '+' || x[k-1] == '-' || x[k-1] == '*' || x[k-1] == '/')
+	{
+		mistake = 1;
+	}
+	if (a != 0) mistake = 1;
+	if (mistake == 1)
+	{
+		printf("error");
+		exit();
+	}
+}
+
+
+
 int main()
 {
 	gets(a);
+	exam(a);
 	int i = 0, j = 0;
 	while (a[i] != '\0')
 	{
@@ -69,8 +119,4 @@ int main()
 	{
 		printf("%c", stack[j]);
 	}
-
-
-
-
 }
